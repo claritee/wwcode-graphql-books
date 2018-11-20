@@ -1,8 +1,5 @@
 const resolvers = {
   Query: {
-    hello(_, args) {
-      return "Hello World"
-    },
     books(_, args) {
       return [{ 
         year: 2013,
