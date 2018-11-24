@@ -52,7 +52,8 @@ module.exports.createStore = () => {
         year: 2009,
         author_id: author.id
       });
-    })
+    });
+
     return true;
   });
 

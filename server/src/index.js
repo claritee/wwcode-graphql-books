@@ -2,7 +2,6 @@ const { ApolloServer, MockList } = require('apollo-server');
 const typeDefs = require('./schema');
 const resolvers = require('./resolvers');
 
-const AuthorRepo = require('./datasources/author_repo');
 const BookRepo = require('./datasources/book_repo');
 
 const { createStore } = require('./connectors');
@@ -17,7 +16,6 @@ const store = createStore();
 
 const dataSources = () => ({
   bookRepo: new BookRepo({ store }),
-  authorRepo: new AuthorRepo({ store }),
 });
 
 const context = async ({ req }) => {

@@ -10,6 +10,10 @@ class BookRepo extends DataSource {
     this.context = config.context;
   }
 
+  async findAuthor({ id }) {
+    return await this.store.AuthorModel.findByPk(id);
+  }
+
   async getBooks() {
     return await this.store.BookModel.findAll({
       include: [{ all: true }]
