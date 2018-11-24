@@ -1,6 +1,6 @@
 const { DataSource } = require('apollo-datasource');
 
-class BookRepo extends DataSource {
+class AuthorRepo extends DataSource {
   constructor({ store }) {
     super();
     this.store = store;
@@ -10,11 +10,9 @@ class BookRepo extends DataSource {
     this.context = config.context;
   }
 
-  async getBooks() {
-    return await this.store.BookModel.findAll({
-      include: [{ all: true }]
-    });
+  async find({ id }) {
+    return await this.store.AuthorModel.findByPk(id);
   }
 }
 
-module.exports = BookRepo;
+module.exports = AuthorRepo;
