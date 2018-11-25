@@ -1,5 +1,7 @@
 const SQL = require('sequelize');
 const casual = require('casual');
+const lodash = require('lodash');
+const faker = require('faker');
 
 module.exports.createStore = () => {
   const Op = SQL.Op;
@@ -43,6 +45,22 @@ module.exports.createStore = () => {
 
   casual.seed(123);
   db.sync({ force: true }).then(() => {
+
+    AuthorModel.bulkCreate(
+      lodash.times(10, () => ({
+        firstname: faker.name.firstName(),
+        lastname: faker.name.lastName(),
+      })),
+    );
+
+    BookModel.bulkCreate(
+      lodash.times(10, () => ({
+        title: faker.lorem.words(),
+        year: lodash.random(1980, 2018),
+        author_id: lodash.random(1, 10)
+      })),
+    );
+
     AuthorModel.create({
       firstname: "Dan",
       lastname: "Pink"
@@ -50,6 +68,28 @@ module.exports.createStore = () => {
       return BookModel.create({
         title: "Drive",
         year: 2009,
+        author_id: author.id
+      });
+    });
+
+    AuthorModel.create({
+      firstname: "Sheryl",
+      lastname: "Sandberg"
+    }).then((author) => {
+      return BookModel.create({
+        title: "Lean In",
+        year: 2013,
+        author_id: author.id
+      });
+    });
+
+    AuthorModel.create({
+      firstname: "Malcolm",
+      lastname: "Gladwell"
+    }).then((author) => {
+      return BookModel.create({
+        title: "Outliers",
+        year: 2008,
         author_id: author.id
       });
     });
