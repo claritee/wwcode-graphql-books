@@ -6,8 +6,8 @@ const resolvers = {
     authors: async(_, _args, { dataSources }) => {
       return dataSources.bookRepo.getAuthors();
     },
-    books: async(_, _args, { dataSources }) => {
-      return dataSources.bookRepo.getBooks();  
+    books: async(_, args, { dataSources }) => {
+      return dataSources.bookRepo.getBooks(args);  
     }
   },
   Mutation: {

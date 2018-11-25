@@ -1,4 +1,5 @@
 const { DataSource } = require('apollo-datasource');
+const { Sequelize } = require('sequelize');
 
 class BookRepo extends DataSource {
   constructor({ store }) {
@@ -25,9 +26,15 @@ class BookRepo extends DataSource {
     return await this.store.AuthorModel.findAll();
   }
 
-  async getBooks() {
+  async getBooks({ cursor, limit = 5 }) {
     return await this.store.BookModel.findAll({
-      include: [{ all: true }]
+      include: [{ all: true }],
+      limit,
+      where: {
+        year: {
+          [Sequelize.Op.lt]: cursor
+        }
+      }
     });
   }
 
