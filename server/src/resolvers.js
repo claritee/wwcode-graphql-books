@@ -6,6 +6,11 @@ const resolvers = {
     books: async(_, _args, { dataSources }) => {
       return dataSources.bookRepo.getBooks();  
     }
+  },
+  Mutation: {
+    createAuthor: async(_, args, { dataSources }) => {
+      return dataSources.bookRepo.createAuthor(args)
+    }
   }
 };
 

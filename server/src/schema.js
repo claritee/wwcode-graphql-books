@@ -16,6 +16,9 @@ const typeDefs = gql`
     year: Int
     title: String
     author: Author
+  },
+  type Mutation{
+    createAuthor(firstname: String!, lastname: String!): Author!
   }
 `
 
