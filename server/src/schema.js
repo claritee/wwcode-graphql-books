@@ -5,7 +5,7 @@ const typeDefs = gql`
     hello: String,
     author(id: ID!): Author,
     authors: [Author],
-    books(cursor: String, limit: Int): [Book] 
+    books(cursor: Int, limit: Int): [Book] 
   },
   type Author {
     id: ID!,

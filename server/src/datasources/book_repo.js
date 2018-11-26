@@ -31,9 +31,18 @@ class BookRepo extends DataSource {
       include: [{ all: true }],
       limit,
       where: {
-        year: {
-          [Sequelize.Op.lt]: cursor
-        }
+        [Sequelize.Op.and]: [
+          {
+            id: {
+              [Sequelize.Op.lte]: cursor
+            },  
+          },
+          {
+            id: {
+              [Sequelize.Op.gt]: cursor - limit
+            },
+          }
+        ]
       }
     });
   }
