@@ -20,7 +20,7 @@ const GET_BOOKS = gql`
 export default function Launches() {
   return (
     <Query query={GET_BOOKS}>
-      {({ data, loading, error, fetchMore }) => {
+      {({ data, loading, error }) => {
         if (loading) return <Loading />;
         if (error) {
           console.log(error);
@@ -34,6 +34,6 @@ export default function Launches() {
           ))
         );
       }}  
-    </Query>
+    </Query>  
   );
 }
