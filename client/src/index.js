@@ -1,7 +1,12 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
+
 import { ApolloClient } from "apollo-client";
+import { ApolloProvider } from 'react-apollo';
 import {InMemoryCache} from 'apollo-cache-inmemory';
 import {HttpLink} from 'apollo-link-http';
-import gql from "graphql-tag";
+
+import Pages from './pages';
 
 const cache = new InMemoryCache();
 const client = new ApolloClient({
@@ -11,31 +16,8 @@ const client = new ApolloClient({
   }),
 });
 
-const query = gql`
-  query getbooks {
-    books(limit: 5, cursor: 10) {
-      id
-      title
-      year
-      author {
-        firstname
-      }
-    }
-  }
-`;
-
-const body = document.body;
-client.query({ query }).then((results) => {
-  results.data.books.forEach( (book) => render(body, book) );
-});
-
-const render = (body, book) => {
-  const bookElement = document.createElement('book');
-  const domString = `
-    <p>
-      <strong>${book.title}</strong> by ${book.author.firstname}
-    </p>
-  `;
-  bookElement.innerHTML = domString;
-  body.appendChild(bookElement);
-};
+ReactDOM.render(
+  <ApolloProvider client={client}>
+    <Pages />
+  </ApolloProvider>, document.getElementById('root')
+);
