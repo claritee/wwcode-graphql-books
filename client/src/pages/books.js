@@ -17,7 +17,7 @@ const GET_BOOKS = gql`
   }
 `;
 
-export default function Launches() {
+export default function books() {
   return (
     <Query query={GET_BOOKS}>
       {({ data, loading, error }) => {
