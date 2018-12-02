@@ -47,6 +47,35 @@ class BookRepo extends DataSource {
     });
   }
 
+  // after: 0, 5, 10
+  async getPaginatedBooks({ after = 0, pageSize = 5 }) {
+    return await this.store.BookModel.findAll({
+      include: [{ all: true }],
+      pageSize,
+      // attributes: [[Sequelize.fn('COUNT', Sequelize.col('title')), 'total']],
+      where: {
+        [Sequelize.Op.and]: [
+          {
+            id: {
+              [Sequelize.Op.lte]: after + pageSize
+            },  
+          },
+          {
+            id: {
+              [Sequelize.Op.gt]: after
+            },
+          }
+        ]
+      }
+    });
+  }
+
+  async getBookTotal() {
+    return await this.store.BookModel.findAll({
+      attributes: [[Sequelize.fn('COUNT', Sequelize.col('title')), 'total']]
+    })
+  }
+
   async createBook({ title, year, authorId }) {
     return await this.store.BookModel.create({
       title: title,
